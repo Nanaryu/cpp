@@ -131,6 +131,36 @@ int main()
 			}
 			break;
 		case 3:
+		    {
+		        int e = 0;
+		        int place = 0;
+		        bool triggered = false;
+                cout << "Value: ";
+                cin >> e;
+                cout << "Place: ";
+                cin >> place;
+		        int* new_pointer = NULL;
+                new_pointer = new int[size + 1];
+                for (int i = 0; i < size; i++)
+                {
+                    if (i==place && !triggered) {
+                        new_pointer[i] = e;
+                        triggered = true;
+                    }
+                    if (triggered)
+                    {
+                        new_pointer[i+1] = p[i];
+                    }
+                    else
+                    {
+                        new_pointer[i] = p[i];
+                    }
+                }
+
+                delete[] p;
+                p = new_pointer;
+                size++;
+		    }
 			break;
 		case 4:
 			showarr(p, size);
