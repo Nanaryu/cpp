@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
+#include <fstream>
 
 using namespace std;
 
@@ -15,10 +16,12 @@ void menu_construct()
 	cout << "2. Delete Element" << endl;
 	cout << "3. Insert Element" << endl;
 	cout << "4. Show Array" << endl;
-	cout << "5. Exit Program" << endl;
-	cout << "" << endl;
-	cout << "Choice: ";
+	cout << "5. Write to file" << endl;
+	cout << "6. Read from file" << endl;
+	cout << "0. Exit Program" << endl;
+	cout << "\nChoice: ";
 }
+
 
 void showarr(int *pointer, int n)
 {
@@ -53,12 +56,13 @@ int main()
 		p[i] = randint(0, 10);
 	}
 
-	bool active = true;
-	while (active) {
+	while (true) {
 		int n = NULL;
 		menu_construct();
 		cin >> n;
 		switch (n) {
+        case 0:
+			return 0;
 		case 1:
 			{
 				int* new_pointer = NULL;
@@ -165,9 +169,45 @@ int main()
 		case 4:
 			showarr(p, size);
 			break;
-		case 5:
-			active = false;
-			break;
+        case 5:
+            {
+                fstream file;
+                file.open("C:\\users\\student\\desktop\\test.txt", ios::out | ios::app);
+                if(file.is_open())
+                {
+                    for(int i = 0; i < size; i++)
+                    {
+                        if(i != size - 1)
+                        {
+                            file << p[i] << endl;
+                        }
+                        else
+                        {
+                            file << p[i];
+                        }
+                    }
+                }
+                file.close();
+            }
+            break;
+        case 6:
+            {
+                fstream file;
+                file.open("C:\\users\\student\\desktop\\test.txt", ios::in);
+                if(file.is_open())
+                {
+                    string str;
+                    int indicator = 0;
+                    while(!file.eof())
+                    {
+                        getline(file, str);
+                        indicator++;
+                        p[indicator] = atoi(str.c_str());
+                    }
+                }
+                file.close();
+            }
+            break;
 		default:
 			cout << "Option not available.";
 			break;
