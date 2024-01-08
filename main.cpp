@@ -10,21 +10,35 @@ int randint(int from, int to)
 	return ((to - from) * double(rand()) / RAND_MAX) + from;
 }
 
+string strm(int amount, string str)
+{
+    string r_str = str;
+    for (int i=0; i < amount; i++)
+    {
+        r_str += str;
+    }
+    return r_str;
+}
+
 void menu_construct()
 {
-	cout << "1. Add Element" << endl;
-	cout << "2. Delete Element" << endl;
-	cout << "3. Insert Element" << endl;
-	cout << "4. Show Array" << endl;
-	cout << "5. Write to file" << endl;
-	cout << "6. Read from file" << endl;
-	cout << "0. Exit Program" << endl;
-	cout << "\nChoice: ";
+    cout << strm(3, "\n");
+    cout << strm(47, " ") << strm(20, "=") << endl;
+	cout << strm(48, " ") << "[1]. Add Element" << endl;
+	cout << strm(48, " ") << "[2]. Delete Element" << endl;
+	cout << strm(48, " ") << "[3]. Insert Element" << endl;
+	cout << strm(48, " ") << "[4]. Show Array" << endl;
+	cout << strm(48, " ") << "[5]. Write to file" << endl;
+	cout << strm(48, " ") << "[6]. Read from file" << endl;
+	cout << strm(48, " ") << "[0]. Exit Program" << endl;
+	cout << strm(47, " ") << strm(20, "=") << endl;
+	cout << strm(48, " ") << "[X]. Choice: ";
 }
 
 
 void showarr(int *pointer, int n)
 {
+    cout << "\n " << strm(48, " ");
 	cout << "[";
 	for (int i = 0; i < n; i++)
 	{
@@ -45,7 +59,8 @@ int main()
 	int* p = NULL;
 	int size = 10;
 
-	cout << "Array Initial Length: ";
+    cout << strm(3, "\n");
+	cout << strm(48, " ") <<"Array Initial Length: ";
 	cin >> size;
 	system("cls");
 
@@ -62,17 +77,14 @@ int main()
 		cin >> n;
 		switch (n) {
         case 0:
-			return 0;
+			return 0; // exit
 		case 1:
 			{
 				int* new_pointer = NULL;
 				new_pointer = new int[size + 1];
-				for (int i = 0; i < size; i++)
-				{
-					new_pointer[i] = p[i];
-				}
+				for (int i = 0; i < size; i++) {new_pointer[i] = p[i];}
 				int e = 0;
-				cout << "Value: ";
+				cout << "\n" <<strm(48, " ") << "Value: ";
 				cin >> e;
 				new_pointer[size] = e;
 				delete[] p;
@@ -86,7 +98,7 @@ int main()
 				int* new_new_pointer = NULL;
 				new_pointer = new int[size];
 				int e = 0;
-				cout << "Value: ";
+				cout << "\n" <<strm(48, " ") << "Value: ";
 				cin >> e;
 				bool triggered = false;
 				bool one_instance = false;
@@ -139,9 +151,9 @@ int main()
 		        int e = 0;
 		        int place = 0;
 		        bool triggered = false;
-                cout << "Value: ";
+                cout << "\n" <<strm(48, " ") << "Value: ";
                 cin >> e;
-                cout << "Place: ";
+                cout << "\n" <<strm(48, " ") << "Place: ";
                 cin >> place;
 		        int* new_pointer = NULL;
                 new_pointer = new int[size + 1];
@@ -151,14 +163,9 @@ int main()
                         new_pointer[i] = e;
                         triggered = true;
                     }
-                    if (triggered)
-                    {
-                        new_pointer[i+1] = p[i];
-                    }
-                    else
-                    {
-                        new_pointer[i] = p[i];
-                    }
+
+                    if (triggered) {new_pointer[i + 1] = p[i];}
+                    else {new_pointer[i] = p[i];}
                 }
 
                 delete[] p;
@@ -172,8 +179,9 @@ int main()
         case 5:
             {
                 fstream file;
-                file.open("C:\\users\\student\\desktop\\test.txt", ios::out | ios::app);
-                if(file.is_open())
+                fstream bak;
+                file.open("C:\\users\\student\\desktop\\test.txt", ios::out | ios::trunc);
+                if (file.is_open())
                 {
                     for(int i = 0; i < size; i++)
                     {
@@ -186,8 +194,8 @@ int main()
                             file << p[i];
                         }
                     }
+                    file.close();
                 }
-                file.close();
             }
             break;
         case 6:
@@ -198,18 +206,34 @@ int main()
                 {
                     string str;
                     int indicator = 0;
+
                     while(!file.eof())
                     {
                         getline(file, str);
                         indicator++;
-                        p[indicator] = atoi(str.c_str());
                     }
+
+                    int* new_pointer = NULL;
+                    new_pointer = new int[indicator];
+                    size = indicator;
+                    indicator = 0;
+                    file.clear();
+                    file.seekg(0);
+
+                    while(!file.eof())
+                    {
+                        getline(file, str);
+                        new_pointer[indicator] = atoi(str.c_str());
+                        indicator++;
+                    }
+                    delete[] p;
+                    p = new_pointer;
                 }
                 file.close();
             }
             break;
 		default:
-			cout << "Option not available.";
+			cout << "\n" <<strm(48, " ") << "Option not available." << endl;
 			break;
 		}
 		system("pause");
