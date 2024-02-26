@@ -28,10 +28,23 @@ void showarr(int *p, int n)
 
 void genarr(int *p, int n)
 {
-    for (int i=0;i<n-1;i++)
+    for (int i=0;i<n;i++)
     {
         p[i] = randint(0, 10);
     }
+}
+
+void minS(int *p, int n, int st, int sp)
+{
+    int minV = p[st];
+    for (int i = st; i < sp; i++)
+    {
+        if (p[i] < minV)
+        {
+            minV = p[i];
+        }
+    }
+    cout << minV << endl;
 }
 
 void sortS(int *p, int n)
@@ -47,6 +60,7 @@ void sortS(int *p, int n)
                 m = j;
             }
         }
+
         if (m != i)
         {
             int t = p[i];
@@ -59,15 +73,17 @@ void sortS(int *p, int n)
 void sortI(int *p, int n)
 {
     int i, key, j;
-    for (i = 1; i < n; i++) {
+    for (i = 1; i < n; i++)
+    {
         key = p[i];
         j = i - 1;
 
-        while (j >= 0 && p[j] > key) {
+        while (j >= 0 && p[j] > key)
+        {
             p[j + 1] = p[j];
             j = j - 1;
         }
-        p[j + 1] = key;
+    p[j + 1] = key;
     }
 }
 
@@ -87,6 +103,7 @@ void sortB(int *p, int n)
         }
     }
 }
+
 int main()
 {
     srand(time(NULL));
@@ -114,4 +131,6 @@ int main()
     showarr(p, n);
     sortB(p, n);
     showarr(p, n);
+
+    minS(p, n, 5,10);
 }
